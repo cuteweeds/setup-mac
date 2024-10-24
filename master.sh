@@ -2,6 +2,6 @@
 brew update
 brew upgrade
 brew install --cask git-credential-manager
-git clone https://github.com/cuteweeds/.dotfiles
+git clone https://github.com/cuteweeds/.dotfiles ~/.dotfiles
 cd .dotfiles
 ./install-dotfiles.sh
