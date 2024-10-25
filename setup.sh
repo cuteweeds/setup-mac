@@ -22,6 +22,7 @@ brew upgrade
 
 brew install --cask git-credential-manager
 # Needed to log into github for private repo access
+brew cleanup
 
 echo -e "\nSetting up dotfiles.."
 cd ~/
@@ -47,3 +48,12 @@ echo -e "\n\033[1m\033[32mImportant commands"
 echo -e "\033[0m\033[32mstatus\t.dotfiles repo status"
 echo -e "dot add\tadd file (from ~/)"
 echo -e "dot commit, dot push etc.\033[0m"
+
+echo "Press any key to continue..."
+read -n 1 -s
+
+echo -e "\n\033[1m\033[36mPackage Install list\033[0m"
+cat Brewfile
+
+brew bundle install
+brew cleanup
