@@ -23,7 +23,10 @@ brew upgrade
 brew install --cask git-credential-manager
 brew install gh
 # Needed to log into github for private repo access
+
 brew cleanup
+
+gh auth login
 
 echo -e "\nSetting up dotfiles.."
 cd ~/
