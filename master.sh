@@ -33,9 +33,9 @@ git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 echo -e "\n...backing up existing config files"
-mkdir -p .config-backup && \
+mkdir -p $HOME/.config-backup && \
 dotfiles checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
-xargs -I{} mv {} .config-backup/{}
+xargs -I{} mv {} $HOME/.config-backup/{}
 #not sure this is needed 
 #dotfiles checkout
 
