@@ -1,4 +1,4 @@
 ## Install:
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/cuteweeds/mac-setup/HEAD/setup.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh)"
 ```
