@@ -26,6 +26,7 @@ brew install gh
 
 brew cleanup
 
+echo "Log into git"
 gh auth login
 
 echo -e "\nSetting up dotfiles.."
