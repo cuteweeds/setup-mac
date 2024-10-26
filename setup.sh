@@ -57,6 +57,8 @@ git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntra
 echo "Press enter to continue..."
 read -s
 
+exit
+
 echo -e "checking status\n"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
 
@@ -74,7 +76,6 @@ read -s
 echo -e "\nIf you see \"On branch <name>\" above, dotfiles installed correctly."
 echo -e "\n\033[32m\033[1mUpdating dotfiles"
 echo -e  "\n\033[1m\033[36mUse 'dot' instead of 'git' for dotfile maintenance\033[0m\033[36m\n- dot status\n- dot add <file>\n- dot push\n- dotcetera...\033[0m\n"
-exit
 
 echo "Press enter to continue..."
 read -s
