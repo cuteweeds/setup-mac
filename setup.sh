@@ -1,4 +1,4 @@
-echo -e "\033[34mcw setup script from \n  https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh"
+echo -e "\033[34m\033[1mcw setup script from \n  https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh\033[0m"
 ## Check for git, exit if it's missing
 #if test ! $(which git); then
 #  echo -e "\nGit not found. Install it whatever way is best and re-run this script."
@@ -32,7 +32,7 @@ echo -e "\033[34mcw setup script from \n  https://raw.githubusercontent.com/cute
 #gh auth login
 
 
-echo -e "\033[35m\nSetting up dotfiles.."
+echo -e "\033[36m\nSetting up dotfiles.."
 cd $HOME
 git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
@@ -42,10 +42,10 @@ echo ".dotfiles" >> .gitignore
 echo "backing up existing config files"
 mkdir -p $HOME/.config-backup && git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+.+:\s+." | grep -v "^error:" | grep -v "^Please move or remove them before you switch branches" | awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
 
-echo "Press any key to continue..."
+echo -e "\033[36mPress any key to continue..."
 read -n 1 -s
 
-echo "checking out"
+echo -e "\033[36mchecking out"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
 echo "turning off untracked-file messages"
