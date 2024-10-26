@@ -1,4 +1,4 @@
-ou# Check for git, exit if it's missing
+# Check for git, exit if it's missing
 if test ! $(which git); then
   echo -e "\nGit not found. Install it whatever way is best and re-run this script."
   exit
