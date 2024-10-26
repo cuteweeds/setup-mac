@@ -34,7 +34,7 @@ gh auth login
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 cd $HOME
-git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles && lastask=$task
+git clone --bare -b lite https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
@@ -73,3 +73,13 @@ cat Brewfile
 
 brew bundle install
 brew cleanup
+
+
+FILE="$HOME/.liteinstalls/symlink.sh"
+
+if [ -f $FILE ]; then
+   echo "Script $FILE found. Attempting to run."
+   bash $FILE
+else
+   echo "No $FILE script found, moving on."
+fi
