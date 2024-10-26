@@ -1,34 +1,34 @@
-# Check for git, exit if it's missing
-if test ! $(which git); then
-  echo -e "\nGit not found. Install it whatever way is best and re-run this script."
-  exit
-fi
-
-# Check for xcode-select,
-# Install if we don't have it
-if test ! $(which xcode-select); then
-  echo -e "\nInstalling xcode-stuff"
-  xcode-select --install
-fi
-
-# Install homebrew if we don't have it
-if test ! $(which brew); then
-  echo -e "\nInstalling homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-brew update
-brew upgrade
-
-brew install --cask git-credential-manager
-brew install gh
-# Needed to log into github for private repo access
-
-brew cleanup
-
-
-echo -e "\nLog into git"
-gh auth login
+## Check for git, exit if it's missing
+#if test ! $(which git); then
+#  echo -e "\nGit not found. Install it whatever way is best and re-run this script."
+#  exit
+#fi
+#
+## Check for xcode-select,
+## Install if we don't have it
+#if test ! $(which xcode-select); then
+#  echo -e "\nInstalling xcode-stuff"
+#  xcode-select --install
+#fi
+#
+## Install homebrew if we don't have it
+#if test ! $(which brew); then
+#  echo -e "\nInstalling homebrew..."
+#  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#fi
+#
+#brew update
+#brew upgrade
+#
+#brew install --cask git-credential-manager
+#brew install gh
+## Needed to log into github for private repo access
+#
+#brew cleanup
+#
+#
+#echo -e "\nLog into git"
+#gh auth login
 
 
 echo -e "\nSetting up dotfiles.."
