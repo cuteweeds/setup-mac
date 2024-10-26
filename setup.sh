@@ -52,10 +52,6 @@ task="turning off untracked-file messages"
 echo "$task"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no && lasttask=$task
 
-thisblock="8"
-echo "Press enter to continue..."
-read -s wait
-
 exit
 
 echo -e "checking status\n"
