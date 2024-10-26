@@ -48,7 +48,7 @@ git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+\." |
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
-dotfiles status
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
 
 echo -e "\nIf you see \"On branch <name>\" above, dotfiles installed correctly."
 echo -e "\n\033[32m\033[1mUpdating dotfiles"
