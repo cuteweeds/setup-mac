@@ -1,4 +1,4 @@
-# Check for git, exit if it's missing
+ou# Check for git, exit if it's missing
 if test ! $(which git); then
   echo -e "\nGit not found. Install it whatever way is best and re-run this script."
   exit
@@ -46,10 +46,10 @@ echo -e "\n...backing up existing config files"
 mkdir -p $HOME/.config-backup && \
 dotfiles checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
 xargs -I{} mv {} $HOME/.config-backup/{}
-/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME 
+dotfiles checkout
 
-/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
-/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
+dotfiles config --local status.showUntrackedFiles no
+dotfiles status
 
 echo -e "\nIf you see \"On branch <name>\" above, dotfiles installed correctly."
 echo -e "\n\033[32m\033[1mUpdating dotfiles"
