@@ -44,11 +44,10 @@ alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 echo -e "\n...backing up existing config files"
 mkdir -p $HOME/.config-backup && \
-dotfiles checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
-xargs -I{} mv {} $HOME/.config-backup/{}
-dotfiles checkout
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
-dotfiles config --local status.showUntrackedFiles no
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
 dotfiles status
 
 echo -e "\nIf you see \"On branch <name>\" above, dotfiles installed correctly."
