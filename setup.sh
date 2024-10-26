@@ -73,3 +73,13 @@ cat Brewfile
 
 brew bundle install
 brew cleanup
+
+
+FILE="$HOME/.liteinstalls/symlink.sh"
+
+if [ -f $FILE ]; then
+   echo "Script $FILE found. Attempting to run."
+   bash $FILE
+else
+   echo "No $FILE script found, moving on."
+fi
