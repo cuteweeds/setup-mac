@@ -38,7 +38,7 @@ git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 echo ".dotfiles" >> .gitignore
 
-echo -e "\n...backing up existing config files ok?"
+echo -e "\n...backing up existing config files\n"
 mkdir -p $HOME/.config-backup && git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+[A-Za-z0-9\._-]" | grep -v "^error:" | grep -v "^Please move or remove them before you switch branches" | awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
