@@ -31,34 +31,26 @@ echo -e "\033[34m\033[1mcw setup script \nfrom https://raw.githubusercontent.com
 #echo -e "\nLog into git"
 #gh auth login
 
-thisblock="1"
-echo -e "\033[36m\nSetting up dotfiles.."
+task="setting up dotfiles..."
+echo -e "\033[36m\n$task"
 cd $HOME
-git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
+git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles && lastask=$task
 
-thisblock="2"
-echo -e "\033[36m\nwriting to .gitignore"
-echo ".dotfiles" >> .gitignore
+task="writing to .gitignore..."
+echo -e "\033[36m\n$task"
+echo ".dotfiles" >> .gitignore && lasttask=$task
 
-thisblock="3"
-echo "backing up existing config files"
-mkdir -p $HOME/.config-backup && git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+.+:\s+." | grep -v "^error:" | grep -v "^Please move or remove them before you switch branches" | awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
+task="backing up existing config files"
+echo "$task"
+mkdir -p $HOME/.config-backup && git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+.+:\s+." | grep -v "^error:" | grep -v "^Please move or remove them before you switch branches" | awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{} && lasttask=$task
 
-thisblock="4"
-echo "Press enter to continue..."
-flag=1
+#task="checking out .dotfiles"
+#echo -e "\033[36m$task
+#git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
-thisblock="5"
-echo -e "\033[36mchecking out"
-git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
-
-thisblock="6"
-echo "Press enter to continue..."
-read -s wait
-
-thisblock="7"
-echo "turning off untracked-file messages"
-git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
+task="turning off untracked-file messages"
+echo "$task"
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no && lasttask=$task
 
 thisblock="8"
 echo "Press enter to continue..."
