@@ -42,6 +42,7 @@ echo ".dotfiles" >> .gitignore && lasttask=$task
 
 task="backing up existing config files"
 echo "$task"
+mkdir -p $HOME/.config-backup/.config/gh && mv .config/gh/* $HOME/.config-backup/.config/gh
 mkdir -p $HOME/.config-backup &&  git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:" | grep -v "Please move or remove them before you switch branches" | egrep '.?\s+[^\s]' | sed 's/^.//' |  awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{} && lasttask=$task
 
 task="checking out .dotfiles"
