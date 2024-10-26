@@ -31,36 +31,36 @@ echo -e "\033[34m\033[1mcw setup script \nfrom https://raw.githubusercontent.com
 #echo -e "\nLog into git"
 #gh auth login
 
-thisblock=1
+thisblock="1"
 echo -e "\033[36m\nSetting up dotfiles.."
 cd $HOME
 git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
-thisblock=2
+thisblock="2"
 echo -e "\033[36m\nwriting to .gitignore"
 echo ".dotfiles" >> .gitignore
 
-thisblock=3
+thisblock="3"
 echo "backing up existing config files"
 mkdir -p $HOME/.config-backup && git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+.+:\s+." | grep -v "^error:" | grep -v "^Please move or remove them before you switch branches" | awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
 
-thisblock=4
+thisblock="4"
 echo "Press enter to continue..."
 flag=1
 
-thisblock=5
+thisblock="5"
 echo -e "\033[36mchecking out"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
-thisblock=6
+thisblock="6"
 echo "Press enter to continue..."
 read -s wait
 
-thisblock=6
+thisblock="7"
 echo "turning off untracked-file messages"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
 
-thisblock=8
+thisblock="8"
 echo "Press enter to continue..."
 read -s wait
 
