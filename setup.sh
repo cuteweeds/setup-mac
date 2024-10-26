@@ -34,7 +34,7 @@ gh auth login
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 cd $HOME
-git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles && lastask=$task
+git clone --bare -b lite https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
