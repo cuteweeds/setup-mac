@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo -e "\n\n\033[35m\033[1mcw setup script \nfrom https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
