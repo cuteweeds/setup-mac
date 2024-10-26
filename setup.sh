@@ -1,4 +1,4 @@
-echo -e "\033[34m\033[1mcw setup script from \n  https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh\033[0m"
+echo -e "\033[34m\033[1mcw setup script \nfrom https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh\033[0m"
 ## Check for git, exit if it's missing
 #if test ! $(which git); then
 #  echo -e "\nGit not found. Install it whatever way is best and re-run this script."
@@ -31,31 +31,38 @@ echo -e "\033[34m\033[1mcw setup script from \n  https://raw.githubusercontent.c
 #echo -e "\nLog into git"
 #gh auth login
 
-
+thisblock=1
 echo -e "\033[36m\nSetting up dotfiles.."
 cd $HOME
 git clone --bare https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
+thisblock=2
 echo -e "\033[36m\nwriting to .gitignore"
 echo ".dotfiles" >> .gitignore
 
+thisblock=3
 echo "backing up existing config files"
 mkdir -p $HOME/.config-backup && git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | egrep "\s+.+:\s+." | grep -v "^error:" | grep -v "^Please move or remove them before you switch branches" | awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
 
+thisblock=4
 echo "Press enter to continue..."
-read -s
+flag=1
 
+thisblock=5
 echo -e "\033[36mchecking out"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
+thisblock=6
 echo "Press enter to continue..."
-read -s
+read -s wait
 
+thisblock=6
 echo "turning off untracked-file messages"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
 
+thisblock=8
 echo "Press enter to continue..."
-read -s
+read -s wait
 
 exit
 
@@ -71,14 +78,14 @@ alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 echo "Press enter to continue..."
-read -s
+read -s wait
 
 echo -e "\nIf you see \"On branch <name>\" above, dotfiles installed correctly."
 echo -e "\n\033[32m\033[1mUpdating dotfiles"
 echo -e  "\n\033[1m\033[36mUse 'dot' instead of 'git' for dotfile maintenance\033[0m\033[36m\n- dot status\n- dot add <file>\n- dot push\n- dotcetera...\033[0m\n"
 
 echo "Press enter to continue..."
-read -s
+read -s wait
 
 echo -e "\n\033[1m\033[36mPackage Install list\033[0m\n"
 cat Brewfile
