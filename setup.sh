@@ -53,7 +53,7 @@ git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntra
 echo -e "checking status\n"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
 
-echo "writing to .zshrc"
+#echo "writing to .zshrc"
 #echo "alias dotfiles=\"/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME\"" >> $HOME/.zshrc
 #echo "alias dot=\"/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME\"" >> $HOME/.zshrc
 
