@@ -28,12 +28,13 @@ brew install gpg
 brew install gh
 brew cleanup
 
-echo -e "\nLog into git"
+#echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
 
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 user="cuteweeds@gmail.com"
+mkdir -p $/HOME/setup-mac && curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
 password=$(gpg --decrypt $HOME/setup-mac/remu.gpg)
 cd $HOME
 git clone --bare -b lite https://cuteweeds:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
