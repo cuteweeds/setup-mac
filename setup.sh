@@ -36,7 +36,7 @@ echo -e "\033[36m\n$task\033[0m"
 user="cuteweeds@gmail.com"
 password=$(gpg --decrypt $HOME/setup-mac/remu.gpg)
 cd $HOME
-git clone --bare https://cuteweeds:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
+git clone --bare -b lite https://cuteweeds:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
