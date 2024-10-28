@@ -9,7 +9,7 @@ curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite
 
 ## Ultralite
 ```
-git clone https://github.com/cuteweeds/setup-mac ~/setup-mac
+git clone -b lite https://github.com/cuteweeds/setup-mac ~/setup-mac
 cd ~/setup-mac
 chmod u+x setup.sh
 ./setup.sh
