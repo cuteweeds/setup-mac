@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (texan)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (orbs)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -151,6 +151,6 @@ cd $HOME
 # Give runafter scripts exec permissions and then run them (.myprefs/load.sh should be LAST):
 runafterlist="\
 $HOME/.liteinstalls/install.sh,\
-$HOME/.ssh/decrypt-keys.sh"\
+$HOME/.ssh/decrypt-keys.sh,\
 $HOME/.myprefs/load.sh"
 echo "$runafterlist" | tr ',' '\n' | while read line; do dir=$(dirname $line); file=$(basename $line); cd $dir; pwd; chmod u+x $file; bash $file; cd ~/; done
