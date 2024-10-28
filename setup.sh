@@ -23,9 +23,20 @@ fi
 brew update
 brew upgrade
 
-brew install --cask git-credential-manager
-brew install gpg
-brew install gh
+# Make sure credentials packages are installed
+if test ! $(which git-credential-manager); then
+  echo -e "\nInstalling git-credential-manager"
+  brew install --cask git-credential-manager
+fi
+if test ! $(which gpg); then
+  echo -e "\nInstalling gpg"
+  brew install gpg
+fi
+if test ! $(which gh); then
+  echo -e "\nInstalling gh"
+  brew install gh
+fi
+
 brew cleanup
 
 #echo -e "\nLog into git"
