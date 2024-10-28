@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (hammock)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (texan)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -105,13 +105,13 @@ mkdir -p $HOME/setup-mac/config-backup/.liteinstalls && mv $HOME/.liteinstalls/*
 mkdir -p $HOME/setup-mac/config-backup/.myprefs && mv $HOME/.myprefs/* $HOME/setup-mac/config-backup/.myprefs
 mkdir -p $HOME/setup-mac/config-backup/.ssh && mv $HOME/.ssh/* $HOME/setup-mac/config-backup/.ssh
 mkdir -p $HOME/setup-mac/config-backup/.userscripts && mv $HOME/.userscripts/* $HOME/setup-mac/config-backup/.userscripts
-mv $HOME/.gitconfig/* $HOME/setup-mac/config-backup/
-mv $HOME/.gitignore/* $HOME/setup-mac/config-backup/
-mv $HOME/.runafter/* $HOME/setup-mac/config-backup/
-mv $HOME/.stow-global-ignore/* $HOME/setup-mac/config-backup/
-mv $HOME/.zshrc/* $HOME/setup-mac/config-backup/
-mv $HOME/.Brewfile/* $HOME/setup-mac/config-backup/
-mv $HOME/.README.md/* $HOME/setup-mac/config-backup/
+mv $HOME/.gitconfig $HOME/setup-mac/config-backup/
+mv $HOME/.gitignore $HOME/setup-mac/config-backup/
+mv $HOME/.runafter $HOME/setup-mac/config-backup/
+mv $HOME/.stow-global-ignore $HOME/setup-mac/config-backup/
+mv $HOME/.zshrc $HOME/setup-mac/config-backup/
+mv $HOME/.Brewfile $HOME/setup-mac/config-backup/
+mv $HOME/.README.md $HOME/setup-mac/config-backup/
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:" | grep -v "Please move or remove them before you switch branches" | egrep '.?\s+[^\s]' | sed 's/^.//' |  awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
 
 task="checking out .dotfiles"
