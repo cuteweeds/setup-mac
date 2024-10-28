@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (sproides)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -43,6 +43,7 @@ brew cleanup
 #/usr/local/bin/gh auth login
 
 mkdir -p $HOME/.gnupg
+export GPG_TTY=$(tty)
 echo "setting $HOME/.gnupg/gpg-agent.conf..."
 touch $HOME/.gnupg/gpg-agent.conf
 echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
@@ -52,16 +53,15 @@ echo RELOADAGENT | gpg-connect-agent
 
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
-export GPG_TTY=$(tty)
 mkdir -p $HOME/setup-mac
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.sh' > $HOME/setup-mac/remu.sh
 cd $HOME/setup-mac
 chmod u+x remu.sh
-
 cd $HOME
+bash $HOME/setup-mac/remu.sh
 user="cuteweeds"
-password=$(gpg --decrypt --interactive --verbose setup-mac/remu.gpg)
+password=$(cat setup-mac/repo_key)
 git clone --bare -b lite https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
