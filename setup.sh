@@ -43,34 +43,51 @@ brew cleanup
 #/usr/local/bin/gh auth login
 
 
-mkdir -p $HOME/.gnupg
 
-# To fix the " gpg: WARNING: unsafe permissions on homedir '/home/path/to/user/.gnupg' " error
-# Make sure that the .gnupg directory and its contents is accessibile by your user.
-echo "\033[35msetting .gnupg/ permissions...\033[0m"
-chown -R $(whoami) $HOME/.gnupg/
+# Credentials checks
+if [[ -f "setup-mac/repo_key" ]]; then
+    echo "Private repo key found!."
+    # Proceed to next steps
+else
+    # Try to download and decypt repo key. Resets gpg-agent.
+    echo "\033[1mPriavte repo key not yet installed. Attempting to create.\033[0m"
+    mkdir -p $HOME/.gnupg
+    
+    # To fix the " gpg: WARNING: unsafe permissions on homedir '/home/path/to/user/.gnupg' " error
+    # Make sure that the .gnupg directory and its contents is accessibile by your user.
+    echo "\033[35msetting .gnupg/ permissions...\033[0m"
+    chown -R $(whoami) $HOME/.gnupg/
 
-# Also correct the permissions and access rights on the directory
-chmod 600 $HOME/.gnupg/*
-chmod 700 $HOME/.gnupg
-export GPG_TTY=$(tty)
-echo "\033[35msetting $HOME/.gnupg/gpg-agent.conf...\033[0m"
-touch $HOME/.gnupg/gpg-agent.conf
-echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
-echo "max-cache-ttl 1" >> $HOME/.gnupg/gpg-agent.conf
-echo "\033[35msending RELOADAGENT to gpg-connect-agent...\033[0m"
-echo RELOADAGENT | gpg-connect-agent
+    # Also correct the permissions and access rights on the directory
+    chmod 600 $HOME/.gnupg/*
+    chmod 700 $HOME/.gnupg
+    export GPG_TTY=$(tty)
+    
+    echo "\033[35msetting $HOME/.gnupg/gpg-agent.conf...\033[0m"
+    touch $HOME/.gnupg/gpg-agent.conf
+    echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
+    echo "max-cache-ttl 1" >> $HOME/.gnupg/gpg-agent.conf
+    echo "\033[35msending RELOADAGENT to gpg-connect-agent...\033[0m"
+    echo RELOADAGENT | gpg-connect-agent
 
-task="fetching dotfiles..."
-echo -e "\033[35m\n$task\033[0m"
-mkdir -p $HOME/setup-mac
-curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
-curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.sh' > $HOME/setup-mac/remu.sh
-cd $HOME/setup-mac
-chmod u+x remu.sh
+    task="fetching private repo credentials..."
+    echo -e "\033[35m\n$task\033[0m"
+    mkdir -p $HOME/setup-mac
+    curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
+    curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.sh' > $HOME/setup-mac/remu.sh
+    cd $HOME/setup-mac
+    chmod u+x remu.sh
+    bash remu.sh
+
+    if [[ -f "setup-mac/repo_key" ]]; then
+        echo "Key created."
+    else
+        echo "\033[1mError: key not created. Try manually regenerating it and re-running script.\033[0m"
+        exit
+    fi
+fi
+
 cd $HOME
-
-bash $HOME/setup-mac/remu.sh
 user="cuteweeds"
 password=$(cat setup-mac/repo_key)
 git clone --bare -b lite https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
