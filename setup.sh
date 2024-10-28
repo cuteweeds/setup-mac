@@ -50,7 +50,6 @@ curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu
 cd $HOME
 user="cuteweeds"
 password=$(gpg --decrypt --batch setup-mac/remu.gpg)
-cd $HOME
 git clone --bare https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
