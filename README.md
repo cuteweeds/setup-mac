@@ -7,4 +7,12 @@ curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh |
 curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh | /bin/bash
 ```
 
+## Ultralite
+```
+git clone -b lite https://github.com/cuteweeds/setup-mac ~/setup-mac
+cd ~/setup-mac
+chmod u+x setup.sh
+./setup.sh
+```
+
 Script leaves install instructions in "setup-mac" folder. They can be safely deleted.
