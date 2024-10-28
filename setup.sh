@@ -2,13 +2,6 @@
 
 echo -e "\n\n\033[35m\033[1mcw setup script lite\nmod 2024-10-28\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
-# Ensure we're running as root
-if [ $(id -u) != "0" ]
-then
-	sudo "$0" "$@"
-	exit $?
-fi
-
 # Check for git, exit if it's missing
 if test ! $(which git); then
   echo -e "\nGit not found. Install it whatever way is best and re-run this script."
