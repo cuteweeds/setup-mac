@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (sproides)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (minaf)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -42,20 +42,18 @@ brew cleanup
 #echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
 
-
-
 # Credentials checks
 if [[ -f "setup-mac/repo_key" ]]; then
     echo "Private repo key found!."
     # Proceed to next steps
 else
     # Try to download and decypt repo key. Resets gpg-agent.
-    echo "\033[1mPriavte repo key not yet installed. Attempting to create.\033[0m"
+    echo -e "\033[1mPriavte repo key not yet installed. Attempting to create.\033[0m"
     mkdir -p $HOME/.gnupg
     
     # To fix the " gpg: WARNING: unsafe permissions on homedir '/home/path/to/user/.gnupg' " error
     # Make sure that the .gnupg directory and its contents is accessibile by your user.
-    echo "\033[35msetting .gnupg/ permissions...\033[0m"
+    echo -e "\033[35msetting .gnupg/ permissions...\033[0m"
     chown -R $(whoami) $HOME/.gnupg/
 
     # Also correct the permissions and access rights on the directory
@@ -63,11 +61,11 @@ else
     chmod 700 $HOME/.gnupg
     export GPG_TTY=$(tty)
     
-    echo "\033[35msetting $HOME/.gnupg/gpg-agent.conf...\033[0m"
+    echo -e "\033[35msetting $HOME/.gnupg/gpg-agent.conf...\033[0m"
     touch $HOME/.gnupg/gpg-agent.conf
     echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
     echo "max-cache-ttl 1" >> $HOME/.gnupg/gpg-agent.conf
-    echo "\033[35msending RELOADAGENT to gpg-connect-agent...\033[0m"
+    echo -e "\033[35msending RELOADAGENT to gpg-connect-agent...\033[0m"
     echo RELOADAGENT | gpg-connect-agent
 
     task="fetching private repo credentials..."
@@ -82,7 +80,7 @@ else
     if [[ -f "setup-mac/repo_key" ]]; then
         echo "Key created."
     else
-        echo "\033[1mError: key not created. Try manually regenerating it and re-running script.\033[0m"
+        echo -e "\033[1mError: key not created. Try manually regenerating it by running 'setup-mac/remu.sh' or 'gpg -idv remu.gpg > repo_key' and re-running script.\033[0m"
         exit
     fi
 fi
@@ -97,7 +95,7 @@ echo -e "\033[35m\n$task\033[0m"
 echo ".dotfiles" >> .gitignore
 
 task="backing up existing config files"
-echo "\033[35m$task\033[0m"
+echo -e "\033[35m$task\033[0m"
 mkdir -p $HOME/setup-mac/config-backup/.config/gh && mv $HOME/.config/gh/* $HOME/setup-mac/config-backup/.config/gh
 mkdir -p $HOME/setup-mac/config-backup/.gnupg && mv $HOME/.gnugp/* $HOME/setup-mac/config-backup/.gnupg
 mkdir -p $HOME/setup-mac/config-backup/.liteinstalls && mv $HOME/.liteinstalls/* $HOME/setup-mac/config-backup/.liteinstalls
@@ -118,7 +116,7 @@ echo -e "\033[35m$task\033[0m"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout lite
 
 task="turning off untracked-file messages"
-echo "\033[35m$task\033[0m"
+echo -e "\033[35m$task\033[0m"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no 
 
 #echo "writing to .zshrc"
