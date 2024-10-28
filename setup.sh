@@ -31,12 +31,12 @@ brew cleanup
 
 
 echo -e "\nLog into git"
-gh auth login
+/usr/local/bin/gh auth login
 
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 cd $HOME
-git clone --bare -https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
+git clone --bare -b lite https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
@@ -77,11 +77,10 @@ brew bundle install
 brew cleanup
 
 
-FILE="$HOME/.liteinstalls/symlink.sh"
+cat .runafter | while read -r line; do
+  n=$((n+1))
+  echo "$n: Attempting to run $line"
+  bash $line
+done
 
-if [ -f $FILE ]; then
-   echo "Script $FILE found. Attempting to run."
-   bash $FILE
-else
-   echo "No $FILE script found, moving on."
-fi
+#rm -f .runafter
