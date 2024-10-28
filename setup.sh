@@ -43,9 +43,11 @@ brew cleanup
 #/usr/local/bin/gh auth login
 
 mkdir -p $HOME/.gnupg
+echo "setting $HOME/.gnupg/gpg-agent.conf..."
 touch $HOME/.gnupg/gpg-agent.conf
 echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
 echo "max-cache-ttl 1" >> $HOME/.gnupg/gpg-agent.conf
+echo "sending RELOADAGENT to gpg-connect-agent..."
 echo RELOADAGENT | gpg-connect-agent
 
 task="fetching dotfiles..."
