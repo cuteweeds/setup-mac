@@ -34,7 +34,7 @@ brew cleanup
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 user="cuteweeds@gmail.com"
-mkdir -p $/HOME/setup-mac
+mkdir -p $HOME/setup-mac
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
 password=$(gpg --decrypt --batch $HOME/setup-mac/remu.gpg)
 cd $HOME
