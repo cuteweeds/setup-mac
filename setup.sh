@@ -45,10 +45,11 @@ brew cleanup
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 export GPG_TTY=$(tty)
-user="cuteweeds"
 mkdir -p $HOME/setup-mac
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
-password=$(gpg --decrypt --batch $HOME/setup-mac/remu.gpg)
+cd $HOME
+user="cuteweeds"
+password=$(gpg --decrypt --batch setup-mac/remu.gpg)
 cd $HOME
 git clone --bare https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
