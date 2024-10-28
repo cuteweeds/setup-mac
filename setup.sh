@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite\nmod 2024-10-28\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -30,16 +30,16 @@ brew cleanup
 
 #echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
-
+>>>
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 export GPG_TTY=$(tty)
-user="cuteweeds@gmail.com"
+user="cuteweeds"
 mkdir -p $HOME/setup-mac
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
 password=$(gpg --decrypt --batch $HOME/setup-mac/remu.gpg)
 cd $HOME
-git clone --bare -b lite https://cuteweeds:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
+git clone --bare https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
@@ -60,7 +60,11 @@ mv $HOME/.stow-global-ignore/* $HOME/setup-mac/config-backup/
 mv $HOME/.zshrc/* $HOME/setup-mac/config-backup/
 mv $HOME/.Brewfile/* $HOME/setup-mac/config-backup/
 mv $HOME/.README.md/* $HOME/setup-mac/config-backup/
-mkdir -p $HOME/setup-mac/config-backup &&  git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:" | grep -v "Please move or remove them before you switch branches" | egrep '.?\s+[^\s]' | sed 's/^.//' |  awk {'print $1'} | xargs -I{} mv {} $HOME/setup-mac/config-backup/{}
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:" | grep -v "Please move or remove them before you switch branches" | egrep '.?\s+[^\s]' | sed 's/^.//' |  awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
+
+task="checking out .dotfiles"
+echo -e "\033[36m$task"
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
 task="checking out .dotfiles"
 echo -e "\033[36m$task"
