@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (mulad)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (hammock)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -43,12 +43,13 @@ brew cleanup
 #/usr/local/bin/gh auth login
 
 # Credentials checks
-if [[ -f "setup-mac/repo_key" ]]; then
-    echo "Private repo key found!."
-    # Proceed to next steps
+if [[ -f "$HOME/setup-mac/repo_key" ]]; then
+    echo "Private repo key found:"
+    password=$(cat $HOME/setup-mac/repo_key)
+    echo $password
 else
     # Try to download and decypt repo key. Resets gpg-agent.
-    echo -e "\033[1mPriavte repo key not yet installed. Attempting to create.\033[0m"
+    echo -e "\033[1mPrivate repo key not yet installed. Attempting to create.\033[0m"
     mkdir -p $HOME/.gnupg
     
     # To fix the " gpg: WARNING: unsafe permissions on homedir '/home/path/to/user/.gnupg' " error
@@ -76,9 +77,12 @@ else
     cd $HOME/setup-mac
     chmod u+x remu.sh
     bash remu.sh
-
+    
+    # Confirm key
     if [[ -f "setup-mac/repo_key" ]]; then
         echo "Key created."
+        password=$(cat $HOME/setup-mac/repo_key)
+        echo $password
     else
         echo -e "\033[1mError: key mising or corrupt. Try manually regenerating it by running 'setup-mac/remu.sh' or 'gpg -idv remu.gpg > repo_key' and re-running script.\033[0m"
         exit
@@ -87,7 +91,6 @@ fi
 
 cd $HOME
 user="cuteweeds"
-password=$(cat setup-mac/repo_key)
 git clone --bare -b lite https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
