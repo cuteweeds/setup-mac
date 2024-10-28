@@ -30,7 +30,7 @@ brew cleanup
 
 #echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
->>>
+
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 export GPG_TTY=$(tty)
