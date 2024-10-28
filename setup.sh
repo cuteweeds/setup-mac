@@ -50,7 +50,7 @@ curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu
 cd $HOME
 user="cuteweeds"
 password=$(gpg --decrypt --batch setup-mac/remu.gpg)
-git clone --bare https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
+git clone --bare -b lite https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
@@ -75,11 +75,7 @@ git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:
 
 task="checking out .dotfiles"
 echo -e "\033[36m$task"
-git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
-
-task="checking out .dotfiles"
-echo -e "\033[36m$task"
-git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout lite
 
 task="turning off untracked-file messages"
 echo "$task"
