@@ -47,8 +47,20 @@ echo ".dotfiles" >> .gitignore
 
 task="backing up existing config files"
 echo "$task"
-mkdir -p $HOME/.config-backup/.config/gh && mv .config/gh/* $HOME/.config-backup/.config/gh
-mkdir -p $HOME/.config-backup &&  git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:" | grep -v "Please move or remove them before you switch branches" | egrep '.?\s+[^\s]' | sed 's/^.//' |  awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
+mkdir -p $HOME/setup-mac/config-backup/.config/gh && mv $HOME/.config/gh/* $HOME/setup-mac/config-backup/.config/gh
+mkdir -p $HOME/setup-mac/config-backup/.gnupg && mv $HOME/.gnugp/* $HOME/setup-mac/config-backup/.gnupg
+mkdir -p $HOME/setup-mac/config-backup/.liteinstalls && mv $HOME/.liteinstalls/* $HOME/setup-mac/config-backup/.liteinstalls
+mkdir -p $HOME/setup-mac/config-backup/.myprefs && mv $HOME/.myprefs/* $HOME/setup-mac/config-backup/.myprefs
+mkdir -p $HOME/setup-mac/config-backup/.ssh && mv $HOME/.ssh/* $HOME/setup-mac/config-backup/.ssh
+mkdir -p $HOME/setup-mac/config-backup/.userscripts && mv $HOME/.userscripts/* $HOME/setup-mac/config-backup/.userscripts
+mv $HOME/.gitconfig/* $HOME/setup-mac/config-backup/
+mv $HOME/.gitignore/* $HOME/setup-mac/config-backup/
+mv $HOME/.runafter/* $HOME/setup-mac/config-backup/
+mv $HOME/.stow-global-ignore/* $HOME/setup-mac/config-backup/
+mv $HOME/.zshrc/* $HOME/setup-mac/config-backup/
+mv $HOME/.Brewfile/* $HOME/setup-mac/config-backup/
+mv $HOME/.README.md/* $HOME/setup-mac/config-backup/
+mkdir -p $HOME/setup-mac/config-backup &&  git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:" | grep -v "Please move or remove them before you switch branches" | egrep '.?\s+[^\s]' | sed 's/^.//' |  awk {'print $1'} | xargs -I{} mv {} $HOME/setup-mac/config-backup/{}
 
 task="checking out .dotfiles"
 echo -e "\033[36m$task"
