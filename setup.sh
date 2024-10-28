@@ -42,6 +42,12 @@ brew cleanup
 #echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
 
+mkdir -p $HOME/.gnupg
+touch $HOME/.gnupg/gpg-agent.conf
+echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
+echo "max-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
+echo RELOADAGENT | gpg-connect-agent
+
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
 export GPG_TTY=$(tty)
