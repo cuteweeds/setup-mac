@@ -31,7 +31,7 @@ brew cleanup
 
 
 echo -e "\nLog into git"
-gh auth login
+/usr/local/bin/gh auth login
 
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
