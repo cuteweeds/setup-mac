@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script \nfrom https://raw.githubusercontent.com/cuteweeds/setup-mac/HEAD/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite \nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -40,7 +40,7 @@ git clone --bare -b lite https://github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
-echo ".dotfiles" >> .gitignore && lasttask=$task
+echo ".dotfiles" >> .gitignore
 
 task="backing up existing config files"
 echo "$task"
@@ -76,11 +76,13 @@ cat Brewfile
 brew bundle install
 brew cleanup
 
+# Give scripts exec permissions
+cd $HOME/.userscripts
+ls | while read line; do chmod u+x $line; done
+cd $HOME
 
-cat .runafter | while read -r line; do
-  n=$((n+1))
-  echo "$n: Attempting to run $line"
-  bash $line
-done
-
-#rm -f .runafter
+# Give scripts exec permissions and then run them (.myprefs/load.sh should be LAST):
+runafterlist="\
+$HOME/.liteinstalls/install.sh,\
+$HOME/.myprefs/load.sh"
+echo "$runafterlist" | tr ',' '\n' | while read line; do dir=$(dirname $line); file=$(basename $line); cd $dir; pwd; chmod u+x $file; bash $file; cd ~/; done
