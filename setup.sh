@@ -1,6 +1,13 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite \nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nmod 2024-10-28\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+
+# Ensure we're running as root
+if [ $(id -u) != "0" ]
+then
+	sudo "$0" "$@"
+	exit $?
+fi
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -8,7 +15,7 @@ if test ! $(which git); then
   exit
 fi
 
-## Check for xcode-select,## Install if we don't have it
+## Check for xcode-select, Install if we don't have it
 if test ! $(which xcode-select); then
   echo -e "\nInstalling xcode-stuff"
   xcode-select --install
@@ -24,6 +31,7 @@ brew update
 brew upgrade
 
 brew install --cask git-credential-manager
+brew install gpg
 brew install gh
 brew cleanup
 
@@ -31,12 +39,10 @@ brew cleanup
 echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
 
-#keyregen
-user="cuteweeds@gmail.com"
-password=$(gpg --decrypt $HOME/.gnupg/remu.gpg)
-
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
+user="cuteweeds@gmail.com"
+password=$(gpg --decrypt $HOME/.gnupg/remu.gpg)
 cd $HOME
 git clone --bare https://cuteweeds:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
@@ -57,9 +63,6 @@ task="turning off untracked-file messages"
 echo "$task"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no 
 
-echo -e "checking status\n"
-git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
-
 #echo "writing to .zshrc"
 #echo "alias dotfiles=\"/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME\"" >> $HOME/.zshrc
 #echo "alias dot=\"/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME\"" >> $HOME/.zshrc
@@ -67,6 +70,9 @@ git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
 echo "setting aliases"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+echo -e "checking status\n"
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
 
 echo -e "\nIf you see \"On branch <name>\" above, dotfiles installed correctly."
 echo -e "\n\033[32m\033[1mUpdating dotfiles"
@@ -78,12 +84,12 @@ cat Brewfile
 brew bundle install
 brew cleanup
 
-# Give scripts exec permissions
+# Give userscripts exec permissions
 cd $HOME/.userscripts
 ls | while read line; do chmod u+x $line; done
 cd $HOME
 
-# Give scripts exec permissions and then run them (.myprefs/load.sh should be LAST):
+# Give runafter scripts exec permissions and then run them (.myprefs/load.sh should be LAST):
 runafterlist="\
 $HOME/.liteinstalls/install.sh,\
 $HOME/.ssh/decrypt-keys.sh"\
