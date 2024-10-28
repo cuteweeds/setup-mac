@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (minaf)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
+echo -e "\n\n\033[35m\033[1mcw setup script lite\nupdated 2024-10-28 (mulad)\nfrom curl -fLks https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/setup.sh\033[0m"
 
 # Check for git, exit if it's missing
 if test ! $(which git); then
@@ -80,7 +80,7 @@ else
     if [[ -f "setup-mac/repo_key" ]]; then
         echo "Key created."
     else
-        echo -e "\033[1mError: key not created. Try manually regenerating it by running 'setup-mac/remu.sh' or 'gpg -idv remu.gpg > repo_key' and re-running script.\033[0m"
+        echo -e "\033[1mError: key mising or corrupt. Try manually regenerating it by running 'setup-mac/remu.sh' or 'gpg -idv remu.gpg > repo_key' and re-running script.\033[0m"
         exit
     fi
 fi
