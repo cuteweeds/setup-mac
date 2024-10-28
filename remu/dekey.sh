@@ -1,0 +1,1 @@
+gpg --output remu-regen --decrypt remu.gpg
