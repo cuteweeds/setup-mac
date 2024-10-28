@@ -57,7 +57,7 @@ mkdir -p $HOME/setup-mac
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
 cd $HOME
 user="cuteweeds"
-password=$(gpg --decrypt --batch setup-mac/remu.gpg)
+password=$(gpg --decrypt --interactive --verbose setup-mac/remu.gpg)
 git clone --bare -b lite https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
