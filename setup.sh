@@ -10,13 +10,13 @@ fi
 
 ## Check for xcode-select, Install if we don't have it
 if test ! $(which xcode-select); then
-  echo -e "\nInstalling xcode-stuff"
+  echo -e "\n\033[35mInstalling xcode-stuff\033[0m"
   xcode-select --install
 fi
 
 # Install homebrew if we don't have it
 if test ! $(which brew); then
-  echo -e "\nInstalling homebrew..."
+  echo -e "\n\033[35mInstalling homebrew...\033[0m"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
@@ -25,15 +25,15 @@ brew upgrade
 
 # Make sure credentials packages are installed
 if test ! $(which git-credential-manager); then
-  echo -e "\nInstalling git-credential-manager"
+  echo -e "\n\033[35mInstalling git-credential-manager\033[0m"
   brew install --cask git-credential-manager
 fi
 if test ! $(which gpg); then
-  echo -e "\nInstalling gpg"
+  echo -e "\n\033[35mInstalling gpg\033[0m"
   brew install gpg
 fi
 if test ! $(which gh); then
-  echo -e "\nInstalling gh"
+  echo -e "\n\033[35mInstalling gh\033[0m"
   brew install gh
 fi
 
@@ -42,34 +42,45 @@ brew cleanup
 #echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
 
+
 mkdir -p $HOME/.gnupg
+
+# To fix the " gpg: WARNING: unsafe permissions on homedir '/home/path/to/user/.gnupg' " error
+# Make sure that the .gnupg directory and its contents is accessibile by your user.
+echo "\033[35msetting .gnupg/ permissions...\033[0m"
+chown -R $(whoami) $HOME/.gnupg/
+
+# Also correct the permissions and access rights on the directory
+chmod 600 $HOME/.gnupg/*
+chmod 700 $HOME/.gnupg
 export GPG_TTY=$(tty)
-echo "setting $HOME/.gnupg/gpg-agent.conf..."
+echo "\033[35msetting $HOME/.gnupg/gpg-agent.conf...\033[0m"
 touch $HOME/.gnupg/gpg-agent.conf
 echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
 echo "max-cache-ttl 1" >> $HOME/.gnupg/gpg-agent.conf
-echo "sending RELOADAGENT to gpg-connect-agent..."
+echo "\033[35msending RELOADAGENT to gpg-connect-agent...\033[0m"
 echo RELOADAGENT | gpg-connect-agent
 
 task="fetching dotfiles..."
-echo -e "\033[36m\n$task\033[0m"
+echo -e "\033[35m\n$task\033[0m"
 mkdir -p $HOME/setup-mac
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.sh' > $HOME/setup-mac/remu.sh
 cd $HOME/setup-mac
 chmod u+x remu.sh
 cd $HOME
+
 bash $HOME/setup-mac/remu.sh
 user="cuteweeds"
 password=$(cat setup-mac/repo_key)
 git clone --bare -b lite https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
-echo -e "\033[36m\n$task"
+echo -e "\033[35m\n$task\033[0m"
 echo ".dotfiles" >> .gitignore
 
 task="backing up existing config files"
-echo "$task"
+echo "\033[35m$task\033[0m"
 mkdir -p $HOME/setup-mac/config-backup/.config/gh && mv $HOME/.config/gh/* $HOME/setup-mac/config-backup/.config/gh
 mkdir -p $HOME/setup-mac/config-backup/.gnupg && mv $HOME/.gnugp/* $HOME/setup-mac/config-backup/.gnupg
 mkdir -p $HOME/setup-mac/config-backup/.liteinstalls && mv $HOME/.liteinstalls/* $HOME/setup-mac/config-backup/.liteinstalls
@@ -86,11 +97,11 @@ mv $HOME/.README.md/* $HOME/setup-mac/config-backup/
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout 2>&1 | grep -v "error:" | grep -v "Please move or remove them before you switch branches" | egrep '.?\s+[^\s]' | sed 's/^.//' |  awk {'print $1'} | xargs -I{} mv {} $HOME/.config-backup/{}
 
 task="checking out .dotfiles"
-echo -e "\033[36m$task"
+echo -e "\033[35m$task\033[0m"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout lite
 
 task="turning off untracked-file messages"
-echo "$task"
+echo "\033[35m$task\033[0m"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no 
 
 #echo "writing to .zshrc"
@@ -104,11 +115,11 @@ alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 echo -e "checking status\n"
 git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status
 
-echo -e "\nIf you see \"On branch <name>\" above, dotfiles installed correctly."
+echo -e "\n\033[35mIf you see \"On branch <name>\" above, dotfiles installed correctly."
 echo -e "\n\033[32m\033[1mUpdating dotfiles"
 echo -e  "\n\033[1m\033[36mUse 'dot' instead of 'git' for dotfile maintenance\033[0m\033[36m\n- dot status\n- dot add <file>\n- dot push\n- dotcetera...\033[0m\n"
 
-echo -e "\n\033[1m\033[36mPackages to install\033[0m\n"
+echo -e "\n\033[1m\033[35mPackages to install\033[0m\n"
 cat Brewfile
 
 brew bundle install
