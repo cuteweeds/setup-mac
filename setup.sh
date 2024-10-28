@@ -45,7 +45,7 @@ brew cleanup
 mkdir -p $HOME/.gnupg
 touch $HOME/.gnupg/gpg-agent.conf
 echo "default-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
-echo "max-cache-ttl 1" > $HOME/.gnupg/gpg-agent.conf
+echo "max-cache-ttl 1" >> $HOME/.gnupg/gpg-agent.conf
 echo RELOADAGENT | gpg-connect-agent
 
 task="fetching dotfiles..."
