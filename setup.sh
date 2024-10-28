@@ -55,6 +55,10 @@ echo -e "\033[36m\n$task\033[0m"
 export GPG_TTY=$(tty)
 mkdir -p $HOME/setup-mac
 curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
+curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.sh' > $HOME/setup-mac/remu.sh
+cd $HOME/setup-mac
+chmod u+x remu.sh
+
 cd $HOME
 user="cuteweeds"
 password=$(gpg --decrypt --interactive --verbose setup-mac/remu.gpg)
