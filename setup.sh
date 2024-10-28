@@ -28,17 +28,18 @@ brew install gh
 brew cleanup
 
 
-echo -e "\nLog into git"
+#echo -e "\nLog into git"
 #/usr/local/bin/gh auth login
-
-#keyregen
-user="cuteweeds@gmail.com"
-password=$(gpg --decrypt $HOME/.gnupg/remu.gpg)
 
 task="fetching dotfiles..."
 echo -e "\033[36m\n$task\033[0m"
+export GPG_TTY=$(tty)
+user="cuteweeds"
+mkdir -p $HOME/setup-mac
+curl 'https://raw.githubusercontent.com/cuteweeds/setup-mac/refs/heads/lite/remu.gpg' > $HOME/setup-mac/remu.gpg
+password=$(gpg --decrypt --batch $HOME/setup-mac/remu.gpg)
 cd $HOME
-git clone --bare https://cuteweeds:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
+git clone --bare https://$user:$password@github.com/cuteweeds/.dotfiles $HOME/.dotfiles
 
 task="writing to .gitignore..."
 echo -e "\033[36m\n$task"
